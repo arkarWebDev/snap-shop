@@ -6,13 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate --config drizzle.config.ts",
+    "db:push": "drizzle-kit push --config drizzle.config.ts",
+    "db:drop": "drizzle-kit drop --config drizzle.config.ts"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^1.4.2",
     "@neondatabase/serverless": "^0.9.5",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "next": "14.2.9",
+    "next-auth": "^5.0.0-beta.16",
     "react": "^18",
     "react-dom": "^18"
   },
