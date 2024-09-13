@@ -1,4 +1,6 @@
 "use client";
+
+import { useAction } from "next-safe-action/hooks";
 import AuthForm from "@/components/auth/auth-form";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { register } from "@/server/actions/register-action";
+import { cn } from "@/lib/utils";
 
 const Register = () => {
   const form = useForm({
@@ -27,8 +30,11 @@ const Register = () => {
     },
   });
 
+  const { execute, status, result } = useAction(register);
+
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    console.log(values);
+    const { name, email, password } = values;
+    execute({ name, email, password });
   };
   return (
     <AuthForm
@@ -80,7 +86,14 @@ const Register = () => {
               )}
             />
           </div>
-          <Button className="w-full my-4">Register</Button>
+          <Button
+            className={cn(
+              "w-full my-4",
+              status === "executing" && "animate-pulse"
+            )}
+          >
+            Register
+          </Button>
         </form>
       </Form>
     </AuthForm>

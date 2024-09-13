@@ -1,4 +1,6 @@
 "use client";
+
+import { useAction } from "next-safe-action/hooks";
 import AuthForm from "@/components/auth/auth-form";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -16,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { login } from "@/server/actions/login-action";
+import { cn } from "@/lib/utils";
 
 const Login = () => {
   const form = useForm({
@@ -26,8 +30,11 @@ const Login = () => {
     },
   });
 
+  const { execute, status, result } = useAction(login);
+
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    const { email, password } = values;
+    execute({ email, password });
   };
   return (
     <AuthForm
@@ -69,7 +76,14 @@ const Login = () => {
               <Link href={"/auth/reset"}>Forgot password?</Link>
             </Button>
           </div>
-          <Button className="w-full mb-4">Login</Button>
+          <Button
+            className={cn(
+              "w-full mb-4",
+              status === "executing" && "animate-pulse"
+            )}
+          >
+            Login
+          </Button>
         </form>
       </Form>
     </AuthForm>
