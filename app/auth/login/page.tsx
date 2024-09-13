@@ -37,38 +37,40 @@ const Login = () => {
       showProvider
     >
       <Form {...form}>
-        <div>
-          <FormField
-            name="email"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="snapshot@gmail.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="password"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="*******" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button size={"sm"} variant={"link"} className="pl-0 mb-1">
-            <Link href={"/auth/reset"}>Forgot password?</Link>
-          </Button>
-        </div>
-        <Button className="w-full mb-4">Login</Button>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div>
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="snapshot@gmail.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="*******" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button size={"sm"} variant={"link"} className="pl-0 mb-1">
+              <Link href={"/auth/reset"}>Forgot password?</Link>
+            </Button>
+          </div>
+          <Button className="w-full mb-4">Login</Button>
+        </form>
       </Form>
     </AuthForm>
   );
