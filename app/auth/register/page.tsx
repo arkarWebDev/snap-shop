@@ -33,8 +33,6 @@ const Register = () => {
 
   const { execute, status, result } = useAction(register, {
     onSuccess({ data }) {
-      console.log(data);
-
       form.reset();
       if (data?.error) {
         toast.error(data?.error);
