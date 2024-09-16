@@ -81,6 +81,7 @@ const Login = () => {
               "w-full mb-4",
               status === "executing" && "animate-pulse"
             )}
+            disabled={status === "executing"}
           >
             Login
           </Button>
