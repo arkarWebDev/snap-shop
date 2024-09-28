@@ -1,4 +1,5 @@
 "use client";
+
 import { Session } from "next-auth";
 import { Button } from "../ui/button";
 import { signOut } from "next-auth/react";
@@ -12,9 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useRouter } from "next/navigation";
 
 const UserButton = ({ user }: Session) => {
-  console.log(user);
+  const router = useRouter();
 
   return (
     <div>
@@ -46,7 +48,10 @@ const UserButton = ({ user }: Session) => {
               <Truck className="w-5 h-5 mr-3 group-hover:translate-x-1 group-hover:text-primary transition-all duration-300 ease-in-out" />
               <span className="text-sm font-medium">My Orders</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer group hover:bg-primary/10">
+            <DropdownMenuItem
+              className="cursor-pointer group hover:bg-primary/10"
+              onClick={() => router.push("/dashboard/settings")}
+            >
               <Settings className="w-5 h-5 mr-3 group-hover:rotate-180 group-hover:text-primary transition-all duration-300 ease-in-out" />
               <span className="text-sm font-medium">Setting</span>
             </DropdownMenuItem>
