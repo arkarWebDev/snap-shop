@@ -2,13 +2,15 @@ import React from "react";
 import SettingsCard from "./settings-card";
 import { Button } from "../ui/button";
 import { Check, X } from "lucide-react";
+import { auth } from "@/server/auth";
 
-const TwoFactor = () => {
+const TwoFactor = async () => {
+  const session = await auth();
   return (
     <SettingsCard>
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium">Two Factor Authentaction</p>
-        {true ? (
+        {session?.user.isTwoFactorEnabled ? (
           <Button
             className="bg-green-600 text-white hover:bg-green-500"
             size={"sm"}

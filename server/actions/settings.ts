@@ -5,6 +5,7 @@ import { actionClient } from "./safe-action";
 import { db } from "@/server";
 import { eq } from "drizzle-orm";
 import { users } from "../schema";
+import { revalidatePath } from "next/cache";
 
 export const updateDisplayName = actionClient
   .schema(settingsSchema)
@@ -21,6 +22,6 @@ export const updateDisplayName = actionClient
       return { error: "User not found" };
     }
     await db.update(users).set({ name }).where(eq(users.email, email));
-
+    revalidatePath("/dashboard/settings");
     return { success: "Display name updated" };
   });

@@ -21,8 +21,9 @@ import { cn } from "@/lib/utils";
 type ProfileFormProps = {
   name: string;
   email: string;
+  setIsOpen: () => void;
 };
-const ProfileForm = ({ name, email }: ProfileFormProps) => {
+const ProfileForm = ({ name, email, setIsOpen }: ProfileFormProps) => {
   const form = useForm({
     resolver: zodResolver(settingsSchema),
     defaultValues: {
@@ -38,6 +39,7 @@ const ProfileForm = ({ name, email }: ProfileFormProps) => {
         toast.error(data?.error);
       }
       if (data?.success) {
+        setIsOpen();
         toast.success(data?.success);
       }
     },
