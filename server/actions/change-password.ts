@@ -10,6 +10,7 @@ import bcrypt from "bcrypt";
 
 import { Pool } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
+import { redirect } from "next/navigation";
 
 export const changePassword = actionClient
   .schema(changePasswordSchema)
@@ -52,5 +53,6 @@ export const changePassword = actionClient
         .delete(resetPasswordToken)
         .where(eq(resetPasswordToken.id, existingToken.id));
     });
+
     return { success: "Password changed" };
   });
