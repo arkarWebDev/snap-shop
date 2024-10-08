@@ -8,3 +8,8 @@ export const settingsSchema = z.object({
     message: "Please enter a valid email address.",
   }),
 });
+
+export const twoFactorSchema = z.object({
+  isTwoFactorEnabled: z.boolean(),
+  email: z.string().email(),
+});

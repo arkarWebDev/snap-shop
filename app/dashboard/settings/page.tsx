@@ -19,7 +19,11 @@ const Settings = async () => {
         <div className="space-y-4 flex-1">
           {!session.user.isOauth && (
             <>
-              <ChangePassword email={session.user.email} /> <TwoFactor />
+              <ChangePassword email={session.user.email} />{" "}
+              <TwoFactor
+                isTwoFactorEnabled={session.user.isTwofactorEnabled}
+                email={session.user.email}
+              />
             </>
           )}
         </div>

@@ -29,6 +29,20 @@
       "when": 1727103996883,
       "tag": "0003_fresh_ikaris",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1728413922222,
+      "tag": "0004_clever_thunderbolts",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1728413982760,
+      "tag": "0005_stormy_shotgun",
+      "breakpoints": true
     }
   ]
 }
