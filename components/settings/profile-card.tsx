@@ -1,7 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SettingsCard from "./settings-card";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
@@ -12,7 +12,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -33,6 +32,7 @@ import { Button } from "../ui/button";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
 import ProfileForm from "./profile-form";
+import AvatarUploadForm from "./avatar-upload-form";
 
 type ProfileCardProps = {
   session: Session;
@@ -44,16 +44,16 @@ const ProfileCard = ({ session }: ProfileCardProps) => {
   const handleisOpen = () => {
     setIsOpen(false);
   };
+
   return (
     <SettingsCard>
       <div className="flex items-start gap-2 justify-between">
-        <div className="flex items-center gap-2">
-          <Avatar className="w-14 h-14">
-            <AvatarImage src={session?.user?.image!} alt="profile" />
-            <AvatarFallback className="bg-primary text-white font-bold">
-              {session?.user?.name?.slice(0, 2).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+        <div className="flex items-start gap-2">
+          <AvatarUploadForm
+            name={session.user?.name}
+            image={session.user?.image}
+            email={session.user.email}
+          />
           <div>
             <h2 className=" font-semibold text-lg">{session?.user?.name}</h2>
             <p className="text-sm font-medium text-muted-foreground">

@@ -65,3 +65,7 @@ body[data-scroll-locked].mx-auto {
   padding-left: 1.5rem /* 24px */;
   padding-right: 1.5rem /* 24px */;
 }
+
+[data-ut-element="button"][data-state="uploading"]::after {
+  @apply bg-primary/80;
+}
