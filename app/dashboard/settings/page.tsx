@@ -14,22 +14,25 @@ const Settings = async () => {
   if (!session?.user) return redirect("/");
 
   return (
-    <SettingsCard title="Settings" description="Manage your account settings">
-      <main className=" flex flex-col gap-4">
-        <ProfileCard session={session} />
+    <>
+      <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
+      <SettingsCard title="Settings" description="Manage your account settings">
+        <main className=" flex flex-col gap-4">
+          <ProfileCard session={session} />
 
-        {!session.user.isOauth && (
-          <>
-            <ChangePassword email={session.user.email} />{" "}
-            <TwoFactor
-              isTwoFactorEnabled={session.user.isTwofactorEnabled}
-              email={session.user.email}
-            />
-          </>
-        )}
-        <LogOutBtn />
-      </main>
-    </SettingsCard>
+          {!session.user.isOauth && (
+            <>
+              <ChangePassword email={session.user.email} />{" "}
+              <TwoFactor
+                isTwoFactorEnabled={session.user.isTwofactorEnabled}
+                email={session.user.email}
+              />
+            </>
+          )}
+          <LogOutBtn />
+        </main>
+      </SettingsCard>
+    </>
   );
 };
 
