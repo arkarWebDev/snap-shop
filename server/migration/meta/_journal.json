@@ -43,6 +43,13 @@
       "when": 1728413982760,
       "tag": "0005_stormy_shotgun",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1729528895286,
+      "tag": "0006_cooing_sentinels",
+      "breakpoints": true
     }
   ]
 }
