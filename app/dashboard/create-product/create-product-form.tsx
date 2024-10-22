@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use, useEffect } from "react";
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,8 +26,13 @@ import {
 } from "@/components/ui/card";
 import { DollarSign } from "lucide-react";
 import Tiptap from "./tip-tap";
+import { useAction } from "next-safe-action/hooks";
+import { updateProduct } from "@/server/actions/products";
+import { toast } from "sonner";
+import { redirect, useRouter } from "next/navigation";
 
 const CreateProductForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
@@ -37,10 +42,28 @@ const CreateProductForm = () => {
     },
   });
 
+  const { execute, status, result } = useAction(updateProduct, {
+    onSuccess({ data }) {
+      form.reset();
+      if (data?.error) {
+        toast.error(data?.error);
+      }
+      if (data?.success) {
+        toast.success(data?.success);
+        form.reset();
+        router.push("/dashboard/products");
+      }
+    },
+  });
+
   const onSubmit = (values: z.infer<typeof ProductSchema>) => {
-    console.log(values);
+    const { title, id, description, price } = values;
+    execute({ title, id, description, price });
   };
 
+  useEffect(() => {
+    form.setValue("description", "");
+  }, [form]);
   return (
     <Card>
       <CardHeader>
