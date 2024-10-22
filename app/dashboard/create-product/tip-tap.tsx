@@ -21,6 +21,7 @@ type TiptapProps = {
 const Tiptap = ({ val }: TiptapProps) => {
   const { setValue } = useFormContext();
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         orderedList: {

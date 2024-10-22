@@ -44,8 +44,9 @@ const CreateProductForm = () => {
 
   const { execute, status, result } = useAction(updateProduct, {
     onSuccess({ data }) {
-      form.reset();
       if (data?.error) {
+        console.log(data?.error);
+
         toast.error(data?.error);
       }
       if (data?.success) {

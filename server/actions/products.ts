@@ -31,7 +31,6 @@ export const updateProduct = actionClient
         return { success: `${product[0].title} created successfully.` };
       }
     } catch (error) {
-      console.log(error);
       return { error: "Something went wrong" };
     }
   });
