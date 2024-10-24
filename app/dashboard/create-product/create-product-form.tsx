@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,12 +27,34 @@ import {
 import { DollarSign } from "lucide-react";
 import Tiptap from "./tip-tap";
 import { useAction } from "next-safe-action/hooks";
-import { updateProduct } from "@/server/actions/products";
+import { getSingleProduct, updateProduct } from "@/server/actions/products";
 import { toast } from "sonner";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 const CreateProductForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isEditMode = searchParams.get("edit_id");
+  const [editProduct, setEditProduct] = useState<string>("");
+
+  const isProductExist = async (id: number) => {
+    if (isEditMode) {
+      const response = await getSingleProduct(id);
+      if (response.error) {
+        toast.error(response.error);
+        router.push("/dashboard/products");
+        return;
+      }
+      if (response.success) {
+        setEditProduct(response?.success?.title);
+        form.setValue("title", response?.success?.title);
+        form.setValue("description", response?.success?.description);
+        form.setValue("price", response?.success?.price);
+        form.setValue("id", response?.success?.id);
+      }
+    }
+  };
+
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
@@ -65,11 +87,22 @@ const CreateProductForm = () => {
   useEffect(() => {
     form.setValue("description", "");
   }, [form]);
+
+  useEffect(() => {
+    if (isEditMode) {
+      isProductExist(Number(isEditMode));
+    }
+  }, []);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create Product</CardTitle>
-        <CardDescription>Create a new product</CardDescription>
+        <CardTitle>{isEditMode ? "Edit" : "Create"} Product</CardTitle>
+        <CardDescription>
+          {isEditMode
+            ? `Edit your product : ${editProduct}`
+            : "Create a new product"}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -105,7 +138,7 @@ const CreateProductForm = () => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product title</FormLabel>
+                  <FormLabel>Product price</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-2">
                       <DollarSign

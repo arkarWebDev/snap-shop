@@ -4,6 +4,7 @@ import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import placeHolderImage from "@/public/placeholder.jpg";
 
+export const revalidate = 0;
 const Products = async () => {
   const products = await db.query.products.findMany({
     orderBy: (products, { desc }) => [desc(products.id)],
