@@ -6,6 +6,7 @@ import { db } from "@/server";
 import { products } from "../schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 export const updateProduct = actionClient
   .schema(ProductSchema)
@@ -21,6 +22,7 @@ export const updateProduct = actionClient
           .update(products)
           .set({ description, price, title })
           .where(eq(products.id, id));
+
         revalidatePath("/dashboard/products");
         return { success: `${title} updated successfully.` };
       } else {
@@ -28,6 +30,7 @@ export const updateProduct = actionClient
           .insert(products)
           .values({ description, price, title })
           .returning();
+
         revalidatePath("/dashboard/products");
         return { success: `${product[0].title} created successfully.` };
       }
@@ -47,3 +50,18 @@ export const getSingleProduct = async (id: number) => {
     return { error: "Something went wrong" };
   }
 };
+
+const deleteProductSchema = z.object({
+  id: z.number(),
+});
+export const deleteProduct = actionClient
+  .schema(deleteProductSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    try {
+      await db.delete(products).where(eq(products.id, id));
+      revalidatePath("/dashboard/products");
+      return { success: "Product deleted successfully" };
+    } catch (error) {
+      return { error: "Something went wrong" };
+    }
+  });
