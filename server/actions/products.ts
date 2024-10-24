@@ -1,8 +1,11 @@
+"use server";
+
 import { ProductSchema } from "@/types/product-schema";
 import { actionClient } from "./safe-action";
 import { db } from "@/server";
 import { products } from "../schema";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export const updateProduct = actionClient
   .schema(ProductSchema)
@@ -18,14 +21,14 @@ export const updateProduct = actionClient
           .update(products)
           .set({ description, price, title })
           .where(eq(products.id, id));
-
+        revalidatePath("/dashboard/products");
         return { success: `${title} updated successfully.` };
       } else {
         const product = await db
           .insert(products)
           .values({ description, price, title })
           .returning();
-
+        revalidatePath("/dashboard/products");
         return { success: `${product[0].title} created successfully.` };
       }
     } catch (error) {
