@@ -50,6 +50,13 @@
       "when": 1729528895286,
       "tag": "0006_cooing_sentinels",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1730140537382,
+      "tag": "0007_nostalgic_ironclad",
+      "breakpoints": true
     }
   ]
 }
