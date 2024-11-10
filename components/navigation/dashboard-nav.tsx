@@ -16,17 +16,18 @@ type DashBoardNavigationProps = {
 const DashBoardNavigation = ({ routes }: DashBoardNavigationProps) => {
   const pathname = usePathname();
   return (
-    <nav className="mt-2 mb-6 border-b border-b-slate-300 pb-2 ">
+    <nav className="mt-2 mb-6 border-b border-b-slate-300 pb-2">
       <div className="flex items-center gap-2 justify-center flex-wrap">
         {routes.map((route, index) => (
           <Link href={route.path} key={index}>
             <span
               className={cn(
                 "flex items-center gap-1 text-gray-400 font-medium text-sm",
-                pathname === route.path && "text-primary text-base font-bold"
+                pathname === route.path &&
+                  "text-white bg-primary px-2 py-1 rounded-md"
               )}
             >
-              {route.icons} {route.label} {index !== routes.length - 1 && "|"}
+              {route.icons} {route.label}
             </span>
           </Link>
         ))}
