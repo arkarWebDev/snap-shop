@@ -98,7 +98,7 @@ export const columns: ColumnDef<Product>[] = [
               <p>{variant.color}</p>
             </div>
           ))}
-          <VariantDialog editMode={false}>
+          <VariantDialog editMode={false} productID={row.original.id}>
             <CirclePlus className="w-5 h-5 text-gray-500 hover:text-black duration-200 cursor-pointer" />
           </VariantDialog>
         </div>
