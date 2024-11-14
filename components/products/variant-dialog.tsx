@@ -61,7 +61,7 @@ const VariantDialog = ({
 
   const { execute, status, result } = useAction(createVariant, {
     onSuccess({ data }) {
-      setOpen(true);
+      setOpen(false);
       if (data?.error) {
         toast.error(data?.error);
         form.reset();

@@ -91,13 +91,24 @@ export const columns: ColumnDef<Product>[] = [
     header: "Variants",
     cell: ({ row }) => {
       const variants = row.getValue("variants") as VariantsWithImagesTags[];
+
       return (
-        <div>
-          {variants.map((variant) => (
-            <div key={variant.id}>
-              <p>{variant.color}</p>
-            </div>
-          ))}
+        <div className="flex gap-1">
+          {variants.map((v) => {
+            console.log(v);
+            return (
+              <VariantDialog
+                editMode={true}
+                productID={row.original.id}
+                variant={v}
+              >
+                <div
+                  className="w-5 h-5 rounded-full"
+                  style={{ backgroundColor: v.color }}
+                />
+              </VariantDialog>
+            );
+          })}
           <VariantDialog editMode={false} productID={row.original.id}>
             <CirclePlus className="w-5 h-5 text-gray-500 hover:text-black duration-200 cursor-pointer" />
           </VariantDialog>
