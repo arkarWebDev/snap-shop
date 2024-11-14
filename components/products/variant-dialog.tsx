@@ -30,8 +30,9 @@ import { VariantSchema } from "@/types/variant-schema";
 import TagsInput from "./tags-input";
 import VariantImages from "./variant-images";
 import { useAction } from "next-safe-action/hooks";
-import { createVariant } from "@/server/actions/variants";
+import { createVariant, deleteVariant } from "@/server/actions/variants";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 type VariantDialogProps = {
   children: React.ReactNode;
@@ -60,6 +61,19 @@ const VariantDialog = ({
   });
 
   const { execute, status, result } = useAction(createVariant, {
+    onSuccess({ data }) {
+      setOpen(false);
+      if (data?.error) {
+        toast.error(data?.error);
+        form.reset();
+      }
+      if (data?.success) {
+        toast.success(data?.success);
+      }
+    },
+  });
+
+  const variantDelete = useAction(deleteVariant, {
     onSuccess({ data }) {
       setOpen(false);
       if (data?.error) {
@@ -176,15 +190,31 @@ const VariantDialog = ({
               )}
             />
             <VariantImages />
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={status === "executing" || !form.formState.isValid}
-            >
-              {editMode
-                ? "Update product's variant"
-                : "Create product's variant"}
-            </Button>
+            <div className={cn(editMode ? "flex gap-2" : "")}>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={status === "executing" || !form.formState.isValid}
+              >
+                {editMode
+                  ? "Update product's variant"
+                  : "Create product's variant"}
+              </Button>
+              {editMode && (
+                <Button
+                  type="button"
+                  variant={"destructive"}
+                  className="w-full"
+                  disabled={status === "executing" || !form.formState.isValid}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    variantDelete.execute({ id: variant?.id! });
+                  }}
+                >
+                  Delete product's variant
+                </Button>
+              )}
+            </div>
           </form>
         </Form>
       </DialogContent>
