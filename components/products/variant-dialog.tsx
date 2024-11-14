@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -85,6 +85,39 @@ const VariantDialog = ({
       productType,
     });
   }
+
+  const getOldData = () => {
+    if (!editMode) {
+      form.reset();
+      return;
+    }
+    if (editMode && variant) {
+      form.setValue("editMode", true);
+      form.setValue("id", variant?.id);
+      form.setValue("color", variant?.color);
+      form.setValue(
+        "tags",
+        variant?.variantTags.map((t) => t.tag)
+      ),
+        form.setValue(
+          "variantImages",
+          variant?.variantImages.map((img) => {
+            return {
+              url: img.image_url,
+              size: Number(img.size),
+              name: img.name,
+            };
+          })
+        ),
+        form.setValue("productType", variant?.productType);
+      form.setValue("productID", variant.productID);
+    }
+  };
+
+  useEffect(() => {
+    getOldData();
+  }, []);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
@@ -143,7 +176,11 @@ const VariantDialog = ({
               )}
             />
             <VariantImages />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={status === "executing" || !form.formState.isValid}
+            >
               {editMode
                 ? "Update product's variant"
                 : "Create product's variant"}

@@ -24,6 +24,7 @@ const Products = async () => {
         image: placeHolderImage.src,
       };
     }
+
     return {
       id: product.id,
       price: product.price,

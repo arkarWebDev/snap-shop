@@ -83,7 +83,17 @@ export const columns: ColumnDef<Product>[] = [
       const image = row.getValue("image") as string;
       const title = row.getValue("title") as string;
 
-      return <Image src={image} alt={title} width={50} height={50} />;
+      return (
+        <div className="w-12 h-12 overflow-hidden">
+          <Image
+            src={image}
+            alt={title}
+            width={50}
+            height={50}
+            className=" w-full h-full object-cover"
+          />
+        </div>
+      );
     },
   },
   {
