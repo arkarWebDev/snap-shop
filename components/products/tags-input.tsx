@@ -32,7 +32,7 @@ const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(
           onChange={(e) => setTagData(e.target.value)}
         />
 
-        <div className="flex gap-1 my-2">
+        <div className="flex gap-1 my-2 flex-wrap">
           {value.map((tag, index) => (
             <div
               key={index}

@@ -50,7 +50,14 @@ const VariantDialog = ({
   const form = useForm<z.infer<typeof VariantSchema>>({
     resolver: zodResolver(VariantSchema),
     defaultValues: {
-      tags: [],
+      tags: [
+        "iPhone",
+        "iPad",
+        "MacBook",
+        "Apple Watch",
+        "Accessories",
+        "Cover",
+      ],
       variantImages: [],
       color: "#000000",
       productID,
