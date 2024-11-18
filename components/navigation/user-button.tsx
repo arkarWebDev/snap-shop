@@ -22,7 +22,7 @@ const UserButton = ({ user }: Session) => {
     <div>
       {user?.email ? (
         <DropdownMenu modal={false}>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className="ring-0">
             <Avatar>
               <AvatarImage src={user.image!} />
               <AvatarFallback className="bg-primary text-white font-bold">
