@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-7xl mx-auto px-6 lg:px-8`}
       >
         <AppNav />
-        <section className="bg-[#f6f5f8]">
+        <section>
           {children}
           <Toaster position="top-center" richColors closeButton />
         </section>
