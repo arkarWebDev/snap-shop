@@ -40,7 +40,7 @@ const VariantPicker = ({
           <div
             onClick={() =>
               router.push(
-                `/products/${id}?productId=${id}&type=${productType}&image=${image}&title=${title}&price=${price}`,
+                `/products/${id}?vid=${id}&productId=${id}&type=${productType}&image=${image}&title=${title}&price=${price}`,
                 { scroll: false }
               )
             }

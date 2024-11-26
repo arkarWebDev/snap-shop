@@ -27,14 +27,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-7xl mx-auto px-6 lg:px-8`}
-      >
-        <AppNav />
-        <section>
-          {children}
-          <Toaster position="top-center" richColors closeButton />
-        </section>
+      <body className={`${geistSans.variable} ${geistMono.variable} `}>
+        <div className="antialiased max-w-7xl mx-auto px-6 lg:px-8">
+          <AppNav />
+
+          <section>
+            {children}
+            <Toaster position="top-center" richColors closeButton />
+          </section>
+        </div>
       </body>
     </html>
   );
