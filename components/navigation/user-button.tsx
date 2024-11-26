@@ -67,11 +67,13 @@ const UserButton = ({ user }: Session) => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button asChild>
-          <Link href={"/auth/login"} className="space-x-4">
-            <LogIn size={16} /> <span>Login</span>
-          </Link>
-        </Button>
+        <>
+          <Button asChild>
+            <Link href={"/auth/login"} className="space-x-4">
+              <LogIn size={16} /> <span>Login</span>
+            </Link>
+          </Button>
+        </>
       )}
     </div>
   );

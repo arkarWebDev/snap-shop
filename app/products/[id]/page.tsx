@@ -1,3 +1,4 @@
+import AddToCart from "@/components/cart/add-to-cart";
 import ImageSlider from "@/components/products/image-slider";
 import VariantPicker from "@/components/products/variant-picker";
 import formatCurrency from "@/lib/formatCurrency";
@@ -47,13 +48,13 @@ const SingleProduct = async ({ params }: SingleProductProps) => {
   return (
     <>
       {productWithVariants && (
-        <main className="flex gap-4 mt-6">
-          <div className="flex-1">
+        <main className="flex gap-4 mt-6 flex-col lg:flex-row pb-6">
+          <div className="lg:flex-1">
             <ImageSlider
               variants={productWithVariants.product.productVariants}
             />
           </div>
-          <div className="flex-1">
+          <div className="lg:flex-1">
             <h2 className="font-bold text-2xl">
               {productWithVariants.product.title}
             </h2>
@@ -83,6 +84,7 @@ const SingleProduct = async ({ params }: SingleProductProps) => {
                 />
               ))}
             </div>
+            <AddToCart />
           </div>
         </main>
       )}
