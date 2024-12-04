@@ -15,6 +15,7 @@ type PaymentFormProps = {
 const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
   const cart = useCartStore((state) => state.cart);
   const setCartPosition = useCartStore((state) => state.setCartPosition);
+  const clearCart = useCartStore((state) => state.clearCart);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const stripe = useStripe();
@@ -71,6 +72,7 @@ const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
       } else {
         setLoading(false);
         console.log("Order is on the way.");
+        clearCart();
         setCartPosition("Success");
       }
     }

@@ -10,6 +10,7 @@ import CartItem from "./cart-item";
 import CartStatus from "./cart-status";
 import { useCartStore } from "@/store/cart-store";
 import Payment from "./payment";
+import Success from "./success";
 
 type CartDrawerProps = {
   children: React.ReactNode;
@@ -22,12 +23,15 @@ const CartDrawer = ({ children }: CartDrawerProps) => {
         <DrawerTrigger>{children}</DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Your Cart</DrawerTitle>
-            <DrawerDescription>Stay home.Stay safe.</DrawerDescription>
+            <DrawerTitle className="text-center">Your Cart</DrawerTitle>
+            <DrawerDescription className="text-center mb-10">
+              Stay home.Stay safe.
+            </DrawerDescription>
             <CartStatus />
           </DrawerHeader>
           {cartPosition === "Order" && <CartItem />}
           {cartPosition === "Checkout" && <Payment />}
+          {cartPosition === "Success" && <Success />}
         </DrawerContent>
       </Drawer>
     </>
