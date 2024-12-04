@@ -10,6 +10,7 @@ import { loginSchema } from "@/types/login-schema";
 import { eq } from "drizzle-orm";
 import { accounts, users } from "./schema";
 import bcrypt from "bcrypt";
+import Stripe from "stripe";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db) as any,
@@ -83,4 +84,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  events: {
+    createUser: async ({ user }) => {
+      console.log("auth event log");
+
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: "2024-11-20.acacia",
+      });
+      const customer = await stripe.customers.create({
+        email: user.email!,
+        name: user.name!,
+      });
+      await db
+        .update(users)
+        .set({ customerId: customer.id })
+        .where(eq(users.id, user.id!));
+    },
+  },
 });

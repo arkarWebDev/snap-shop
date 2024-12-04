@@ -9,6 +9,7 @@ import {
 import CartItem from "./cart-item";
 import CartStatus from "./cart-status";
 import { useCartStore } from "@/store/cart-store";
+import Payment from "./payment";
 
 type CartDrawerProps = {
   children: React.ReactNode;
@@ -26,7 +27,7 @@ const CartDrawer = ({ children }: CartDrawerProps) => {
             <CartStatus />
           </DrawerHeader>
           {cartPosition === "Order" && <CartItem />}
-          {cartPosition === "Checkout" && <p>I am order element.</p>}
+          {cartPosition === "Checkout" && <Payment />}
         </DrawerContent>
       </Drawer>
     </>
