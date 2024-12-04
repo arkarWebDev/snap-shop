@@ -148,7 +148,7 @@ const CreateProductForm = () => {
                       <Input
                         placeholder="Price must shown in MMK"
                         {...field}
-                        step={100}
+                        // step={10}
                         min={0}
                         type="number"
                       />

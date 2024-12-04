@@ -69,7 +69,7 @@ const SingleProduct = async ({ params }: SingleProductProps) => {
               }}
             />
             <p className="text-2xl font-bold my-2">
-              {formatCurrency(productWithVariants.product.price)} Ks
+              {formatCurrency(productWithVariants.product.price)} USD
             </p>
             <div className="flex gap-2 items-center">
               <p className="font-medium">Colors :</p>
