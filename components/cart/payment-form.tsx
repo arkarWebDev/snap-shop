@@ -8,6 +8,8 @@ import {
 import { Button } from "../ui/button";
 import { processPaymant } from "@/server/actions/payment";
 import { useCartStore } from "@/store/cart-store";
+import { useAction } from "next-safe-action/hooks";
+import { createOrder } from "@/server/actions/order";
 
 type PaymentFormProps = {
   totalPrice: number;
@@ -20,6 +22,17 @@ const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
   const [errorMsg, setErrorMsg] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+
+  const { execute } = useAction(createOrder, {
+    onSuccess: ({ data }) => {
+      if (data?.error) {
+      }
+      if (data?.success) {
+        clearCart();
+        setCartPosition("Success");
+      }
+    },
+  });
 
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,9 +84,16 @@ const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
         return;
       } else {
         setLoading(false);
-        console.log("Order is on the way.");
-        clearCart();
-        setCartPosition("Success");
+        execute({
+          paymentId: repsonse.data.success.paymentIntentId,
+          totalPrice,
+          status: "pending",
+          products: cart.map((ci) => ({
+            productId: ci.id,
+            quantity: ci.variant.quantity,
+            variantId: ci.variant.variantId,
+          })),
+        });
       }
     }
   };
