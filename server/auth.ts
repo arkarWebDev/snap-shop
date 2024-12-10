@@ -86,8 +86,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   events: {
     createUser: async ({ user }) => {
-      console.log("auth event log");
-
       const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
         apiVersion: "2024-11-20.acacia",
       });

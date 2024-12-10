@@ -10,6 +10,7 @@ import { processPaymant } from "@/server/actions/payment";
 import { useCartStore } from "@/store/cart-store";
 import { useAction } from "next-safe-action/hooks";
 import { createOrder } from "@/server/actions/order";
+import { toast } from "sonner";
 
 type PaymentFormProps = {
   totalPrice: number;
@@ -17,7 +18,6 @@ type PaymentFormProps = {
 const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
   const cart = useCartStore((state) => state.cart);
   const setCartPosition = useCartStore((state) => state.setCartPosition);
-  const clearCart = useCartStore((state) => state.clearCart);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const stripe = useStripe();
@@ -26,9 +26,10 @@ const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
   const { execute } = useAction(createOrder, {
     onSuccess: ({ data }) => {
       if (data?.error) {
+        toast.error(data.error);
       }
       if (data?.success) {
-        clearCart();
+        toast.success(data.success);
         setCartPosition("Success");
       }
     },
