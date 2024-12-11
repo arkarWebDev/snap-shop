@@ -29,17 +29,23 @@ import {
 import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/server";
-import { eq, or } from "drizzle-orm";
+import { desc, eq, or } from "drizzle-orm";
 import { orders } from "@/server/schema";
 import formatCurrency from "@/lib/formatCurrency";
 import Image from "next/image";
+
+import { format } from "date-fns";
+import OrderDropdown from "./order-dropdown";
 
 const Orders = async () => {
   const session = await auth();
   if (!session?.user) return redirect("/");
 
   const orderArray = await db.query.orders.findMany({
-    where: eq(orders.userID, session.user.id),
+    where:
+      session.user.role === "admin"
+        ? undefined
+        : eq(orders.userID, session.user.id),
     with: {
       orderProduct: {
         with: {
@@ -49,6 +55,7 @@ const Orders = async () => {
         },
       },
     },
+    orderBy: [desc(orders.id)],
   });
   return (
     <Card>
@@ -65,7 +72,10 @@ const Orders = async () => {
               <TableHead>Total</TableHead>
               <TableHead className="text-center">Ordered on</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Action</TableHead>
+              <TableHead>User action</TableHead>
+              {session?.user?.role === "admin" && (
+                <TableHead className="text-right">Admin action</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody className=" overflow-x-scroll">
@@ -75,7 +85,7 @@ const Orders = async () => {
                   <TableCell className="font-medium">{order.id}</TableCell>
                   <TableCell>{formatCurrency(order.total)}</TableCell>
                   <TableCell className="text-center">
-                    {order.created?.toString()}
+                    {format(new Date(order.created?.toString()!), "dd/MM/yyyy")}
                   </TableCell>
                   <TableCell>
                     {order.status === "pending" && (
@@ -83,8 +93,18 @@ const Orders = async () => {
                         {order.status}
                       </span>
                     )}
+                    {order.status === "completed" && (
+                      <span className="text-white bg-green-500 p-1 rounded text-xs font-medium">
+                        {order.status}
+                      </span>
+                    )}
+                    {order.status === "cancelled" && (
+                      <span className="text-white bg-red-500 p-1 rounded text-xs font-medium">
+                        {order.status}
+                      </span>
+                    )}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <Dialog>
                       <DialogTrigger className="underline">
                         View Details
@@ -149,6 +169,12 @@ const Orders = async () => {
                       </DialogContent>
                     </Dialog>
                   </TableCell>
+
+                  {session.user.role === "admin" && (
+                    <TableCell className="text-right">
+                      <OrderDropdown id={order.id} />
+                    </TableCell>
+                  )}
                 </TableRow>
               );
             })}

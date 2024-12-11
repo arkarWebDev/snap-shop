@@ -12,3 +12,8 @@ export const careateOrderSchema = z.object({
     })
   ),
 });
+
+export const updateOrderSchema = z.object({
+  status: z.enum(["pending", "completed", "cancelled"]),
+  id: z.number(),
+});

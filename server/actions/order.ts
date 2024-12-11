@@ -1,10 +1,12 @@
 "use server";
 
-import { careateOrderSchema } from "@/types/order-schema";
+import { careateOrderSchema, updateOrderSchema } from "@/types/order-schema";
 import { actionClient } from "./safe-action";
 import { auth } from "../auth";
 import { db } from "..";
 import { orderProduct, orders } from "../schema";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export const createOrder = actionClient
   .schema(careateOrderSchema)
@@ -30,4 +32,16 @@ export const createOrder = actionClient
       });
     });
     return { success: "Order added." };
+  });
+
+export const updateOrderStatus = actionClient
+  .schema(updateOrderSchema)
+  .action(async ({ parsedInput: { status, id } }) => {
+    const order = await db.query.orders.findFirst({ where: eq(orders.id, id) });
+    if (!order) {
+      return { error: "Order not found" };
+    }
+    await db.update(orders).set({ status }).where(eq(orders.id, id));
+    revalidatePath("/dashboard/orders");
+    return { success: "Order status updated." };
   });
