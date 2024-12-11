@@ -133,7 +133,7 @@ const Orders = async () => {
                           <TableBody>
                             {order.orderProduct.map(
                               ({ product, productVariants, quantity }) => (
-                                <TableRow>
+                                <TableRow key={product.id}>
                                   <TableCell className="font-medium">
                                     <Image
                                       width={50}
