@@ -17,7 +17,7 @@ const Payment = () => {
   }, []);
 
   return (
-    <div>
+    <div className="px-4">
       <Elements
         stripe={stripe}
         options={{
