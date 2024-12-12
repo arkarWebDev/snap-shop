@@ -1,4 +1,5 @@
 import Products from "@/components/products";
+import SearchBox from "@/components/products/search-box";
 import { db } from "@/server";
 import { productVariants } from "@/server/schema";
 
@@ -14,7 +15,7 @@ export default async function Home() {
 
   return (
     <main>
-      <h2>Nav</h2>
+      <SearchBox productWithVariants={productwithVariants} />
       <Products productWithVariants={productwithVariants} />
     </main>
   );
