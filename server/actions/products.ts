@@ -24,6 +24,7 @@ export const updateProduct = actionClient
           .where(eq(products.id, id));
 
         revalidatePath("/dashboard/products");
+        revalidatePath("/", "layout");
         return { success: `${title} updated successfully.` };
       } else {
         const product = await db
@@ -32,6 +33,7 @@ export const updateProduct = actionClient
           .returning();
 
         revalidatePath("/dashboard/products");
+        revalidatePath("/", "layout");
         return { success: `${product[0].title} created successfully.` };
       }
     } catch (error) {
@@ -60,6 +62,7 @@ export const deleteProduct = actionClient
     try {
       await db.delete(products).where(eq(products.id, id));
       revalidatePath("/dashboard/products");
+      revalidatePath("/", "layout");
       return { success: "Product deleted successfully" };
     } catch (error) {
       return { error: "Something went wrong" };

@@ -23,14 +23,16 @@ export const createOrder = actionClient
       })
       .returning();
 
-    products.map(async ({ productId, quantity, variantId }) => {
-      await db.insert(orderProduct).values({
-        quantity,
-        productID: productId,
-        productVariantID: variantId,
-        orderID: order[0].id,
-      });
-    });
+    await Promise.all(
+      products.map(async ({ productId, quantity, variantId }) => {
+        await db.insert(orderProduct).values({
+          quantity,
+          productID: productId,
+          productVariantID: variantId,
+          orderID: order[0].id,
+        });
+      })
+    );
     return { success: "Order added." };
   });
 

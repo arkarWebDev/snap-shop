@@ -64,6 +64,7 @@ export const createVariant = actionClient
             })
           );
           revalidatePath("/dashboard/products");
+          revalidatePath("/", "layout");
           return { success: `Variants updated.` };
         }
 
@@ -99,6 +100,7 @@ export const createVariant = actionClient
             })
           );
           revalidatePath("/dashboard/products");
+          revalidatePath("/", "layout");
           return { success: `${product?.title}'s variants added.` };
         }
       } catch (error) {
@@ -114,6 +116,7 @@ export const deleteVariant = actionClient
     try {
       await db.delete(productVariants).where(eq(productVariants.id, id));
       revalidatePath("/dashboard/products");
+      revalidatePath("/", "layout");
       return { success: "Variant deleted" };
     } catch (error) {
       console.log(error);
