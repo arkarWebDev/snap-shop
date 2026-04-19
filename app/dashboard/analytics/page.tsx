@@ -9,6 +9,10 @@ const Analytics = async () => {
 
   return (
     <main>
+      <div className="mb-8">
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Analytics Insights</h1>
+        <p className="text-slate-500 mt-2">Monitor your store's performance and recent activity.</p>
+      </div>
       {analyticsData && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           <AnalyticsCard

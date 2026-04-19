@@ -105,10 +105,10 @@ const Login = () => {
                 name="email"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
+                  <FormItem className="mb-4">
+                    <FormLabel className="text-slate-700 font-semibold ml-1">Email Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="snapshot@gmail.com" {...field} />
+                      <Input placeholder="snapshot@gmail.com" className="py-6 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-slate-400" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -118,28 +118,30 @@ const Login = () => {
                 name="password"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
+                  <FormItem className="mb-2">
+                    <div className="flex justify-between items-center mb-1">
+                      <FormLabel className="text-slate-700 font-semibold ml-1 mb-0">Password</FormLabel>
+                      <Button size={"sm"} variant={"link"} className="h-auto p-0 font-medium text-slate-500 hover:text-slate-800">
+                        <Link href={"/auth/reset"}>Forgot password?</Link>
+                      </Button>
+                    </div>
                     <FormControl>
-                      <Input placeholder="*******" {...field} type="password" />
+                      <Input placeholder="•••••••" className="py-6 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-slate-400 font-mono tracking-widest text-lg" {...field} type="password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button size={"sm"} variant={"link"} className="pl-0 mb-1">
-                <Link href={"/auth/reset"}>Forgot password?</Link>
-              </Button>
             </div>
           )}
           <Button
             className={cn(
-              "w-full mb-4 mt-4",
+              "w-full mb-2 mt-6 rounded-full py-6 text-base font-bold shadow-md shadow-slate-900/20 bg-slate-900 hover:bg-slate-800 transition-all active:scale-[0.98]",
               status === "executing" && "animate-pulse"
             )}
             disabled={status === "executing"}
           >
-            {isTwoFactorOn ? "Verify Code" : "Login"}
+            {isTwoFactorOn ? "Verify Secure Code" : "Sign in to iStore"}
           </Button>
         </form>
       </Form>

@@ -31,26 +31,26 @@ const OrderDropdown = ({ id }: OrderDropdownProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="underline">
+      <DropdownMenuTrigger className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
         Change Status
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>Change Order Status</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 border-slate-100 shadow-xl">
+        <DropdownMenuLabel className="font-bold text-slate-800">Order Status</DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-slate-100" />
         <DropdownMenuItem
-          className="cursor-pointer text-orange-500 font-medium"
+          className="cursor-pointer font-semibold focus:bg-amber-50 focus:text-amber-700 text-amber-600 rounded-lg py-2 my-1 transition-colors"
           onClick={() => execute({ id, status: "pending" })}
         >
           Pending
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer text-green-500 font-medium"
+          className="cursor-pointer font-semibold focus:bg-emerald-50 focus:text-emerald-700 text-emerald-600 rounded-lg py-2 my-1 transition-colors"
           onClick={() => execute({ id, status: "completed" })}
         >
           Completed
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer text-red-500 font-medium"
+          className="cursor-pointer font-semibold focus:bg-rose-50 focus:text-rose-700 text-rose-600 rounded-lg py-2 my-1 transition-colors"
           onClick={() => execute({ id, status: "cancelled" })}
         >
           Cancelled

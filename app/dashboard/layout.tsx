@@ -51,9 +51,9 @@ export default async function Layout({
       ? [...privateRoutes, ...publicRoutes]
       : publicRoutes;
   return (
-    <>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <DashBoardNavigation routes={routes} />
-      <section>{children}</section>
-    </>
+      <section className="mt-4">{children}</section>
+    </div>
   );
 }

@@ -45,17 +45,20 @@ const TagFilter = () => {
   };
 
   return (
-    <div className="flex items-center gap-2 justify-center text-sm font-medium mb-2">
+    <div className="flex justify-start sm:justify-center items-center gap-3 text-sm font-medium overflow-x-auto no-scrollbar py-4 px-2 w-full max-w-4xl mx-auto mask-fade-edges">
       {tags.map((t) => (
-        <p
+        <button
+          key={t.id}
           className={cn(
-            "cursor-pointer border-2 rounded-md px-2 py-1 border-black",
-            tagParams === t.tag && "bg-black text-white"
+            "cursor-pointer rounded-full px-6 py-2.5 transition-all duration-300 ease-out whitespace-nowrap border",
+            tagParams === t.tag
+              ? "bg-slate-900 text-white border-slate-900 shadow-md scale-105"
+              : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300"
           )}
           onClick={() => handleTagClick(t.tag)}
         >
           {t.name}
-        </p>
+        </button>
       ))}
     </div>
   );

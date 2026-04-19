@@ -46,10 +46,10 @@ const VariantPicker = ({
             }
             style={{ backgroundColor: color }}
             className={cn(
-              "w-5 h-5 rounded-full cursor-pointer",
+              "w-8 h-8 rounded-full cursor-pointer transition-all duration-300 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] border border-black/10",
               selectedVariantColor === productType
-                ? "opacity-100"
-                : "opacity-35"
+                ? "ring-2 ring-slate-900 ring-offset-2 scale-110"
+                : "opacity-60 hover:opacity-100 hover:scale-105"
             )}
           ></div>
         </TooltipTrigger>

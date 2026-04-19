@@ -8,10 +8,10 @@ const AppNav = async () => {
   const session = await auth();
 
   return (
-    <nav className="flex items-center justify-between py-4">
+    <nav className="flex items-center justify-between py-3">
       <NavLogo />
-      <div className="flex items-center gap-4 cursor-pointer">
-        <CartBtn />
+      <div className="flex items-center gap-3">
+        <CartBtn isLoggedIn={!!session?.user} />
         <UserButton user={session?.user} expires={session?.expires!} />
       </div>
     </nav>

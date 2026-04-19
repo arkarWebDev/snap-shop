@@ -53,15 +53,16 @@ const ActionsCell = (row: Row<Product>) => {
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem className="cursor-pointer text-primary focus:bg-primary/20 focus:text-primary font-medium duration-300">
-          <Link href={`/dashboard/create-product?edit_id=${product.id}`}>
+      <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 border-slate-100 shadow-xl">
+        <DropdownMenuLabel className="font-bold text-slate-800">Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-slate-100" />
+        <DropdownMenuItem className="cursor-pointer font-semibold focus:bg-slate-50 focus:text-slate-900 text-slate-700 rounded-lg py-2 my-1 transition-colors">
+          <Link href={`/dashboard/create-product?edit_id=${product.id}`} className="w-full">
             Edit Product
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer text-red-600 focus:bg-red-200 focus:text-red-600 font-medium duration-300"
+          className="cursor-pointer font-semibold focus:bg-rose-50 focus:text-rose-700 text-rose-600 rounded-lg py-2 my-1 transition-colors"
           onClick={() => execute({ id: product.id })}
         >
           Delete Product
@@ -84,13 +85,12 @@ export const columns: ColumnDef<Product>[] = [
       const title = row.getValue("title") as string;
 
       return (
-        <div className="w-12 h-12 overflow-hidden">
+        <div className="w-12 h-12 relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm flex-shrink-0">
           <Image
             src={image}
             alt={title}
-            width={50}
-            height={50}
-            className=" w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
       );
@@ -103,7 +103,7 @@ export const columns: ColumnDef<Product>[] = [
       const variants = row.getValue("variants") as VariantsWithImagesTags[];
 
       return (
-        <div className="flex gap-1">
+        <div className="flex gap-1.5 flex-wrap items-center">
           {variants.map((v, i) => {
             return (
               <VariantDialog
@@ -113,14 +113,16 @@ export const columns: ColumnDef<Product>[] = [
                 key={i}
               >
                 <div
-                  className="w-5 h-5 rounded-full"
+                  className="w-6 h-6 rounded-full border border-black/10 shadow-sm cursor-pointer hover:scale-110 transition-transform"
                   style={{ backgroundColor: v.color }}
                 />
               </VariantDialog>
             );
           })}
           <VariantDialog editMode={false} productID={row.original.id}>
-            <CirclePlus className="w-5 h-5 text-gray-500 hover:text-black duration-200 cursor-pointer" />
+            <div className="w-6 h-6 flex items-center justify-center rounded-full border border-dashed border-slate-300 bg-slate-50 hover:border-slate-400 hover:bg-slate-100 transition-colors cursor-pointer group">
+              <CirclePlus className="w-4 h-4 text-slate-400 group-hover:text-slate-600" />
+            </div>
           </VariantDialog>
         </div>
       );

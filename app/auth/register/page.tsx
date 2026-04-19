@@ -68,50 +68,50 @@ const Register = () => {
               name="name"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="snapshot" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                  <FormItem className="mb-4">
+                    <FormLabel className="text-slate-700 font-semibold ml-1">Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="snapshot" className="py-6 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-slate-400" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
               )}
             />
             <FormField
               name="email"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="snapshot@gmail.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                  <FormItem className="mb-4">
+                    <FormLabel className="text-slate-700 font-semibold ml-1">Email Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="snapshot@gmail.com" className="py-6 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-slate-400" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
               )}
             />
             <FormField
               name="password"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="*******" {...field} type="password" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                  <FormItem className="mb-4">
+                    <FormLabel className="text-slate-700 font-semibold ml-1">Password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="•••••••" className="py-6 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-slate-400 font-mono tracking-widest text-lg" {...field} type="password" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
               )}
             />
           </div>
           <Button
             className={cn(
-              "w-full my-4",
+              "w-full mb-2 mt-6 rounded-full py-6 text-base font-bold shadow-md shadow-slate-900/20 bg-slate-900 hover:bg-slate-800 transition-all active:scale-[0.98]",
               status === "executing" && "animate-pulse"
             )}
             disabled={status === "executing"}
           >
-            Register
+            Create your account
           </Button>
         </form>
       </Form>

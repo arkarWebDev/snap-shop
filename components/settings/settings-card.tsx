@@ -15,16 +15,18 @@ type SettingsCardProps = {
 
 const SettingsCard = ({ children, title, description }: SettingsCardProps) => {
   return (
-    <Card>
-      <CardHeader>
+    <Card className="border border-slate-100 shadow-sm rounded-3xl overflow-hidden bg-white">
+      <CardHeader className="bg-slate-50/50 border-b border-slate-100 px-6 py-5">
         {title && description && (
           <>
-            <CardTitle>{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardTitle className="text-xl text-slate-800">{title}</CardTitle>
+            <CardDescription className="text-slate-500">{description}</CardDescription>
           </>
         )}
-        {children}
       </CardHeader>
+      <CardContent className="px-6 py-6">
+        {children}
+      </CardContent>
     </Card>
   );
 };

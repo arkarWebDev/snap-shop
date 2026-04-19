@@ -48,43 +48,56 @@ const SingleProduct = async ({ params }: SingleProductProps) => {
   return (
     <>
       {productWithVariants && (
-        <main className="flex gap-4 mt-6 flex-col lg:flex-row pb-6">
-          <div className="lg:flex-1">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-10 lg:gap-16 py-12">
+          <div className="lg:w-1/2 w-full">
             <ImageSlider
               variants={productWithVariants.product.productVariants}
             />
           </div>
-          <div className="lg:flex-1">
-            <h2 className="font-bold text-2xl">
-              {productWithVariants.product.title}
-            </h2>
-            <p className="text-xs bg-gray-200 font-medium w-fit p-1 rounded-md my-2">
-              {productWithVariants.productType} Variant
-            </p>
-            <hr className="mb-4 mt-3" />
+          <div className="lg:w-1/2 w-full flex flex-col">
+            <div className="mb-6">
+              <span className="inline-block px-3 py-1 bg-slate-100/80 text-slate-700 rounded-full text-xs font-bold tracking-wider uppercase mb-4 border border-slate-200">
+                {productWithVariants.productType}
+              </span>
+              <h1 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-slate-900 mb-2">
+                {productWithVariants.product.title}
+              </h1>
+              <p className="text-2xl font-semibold text-slate-900 mt-4">
+                {formatCurrency(productWithVariants.product.price)} USD
+              </p>
+            </div>
+            
+            <hr className="border-slate-200 mb-6" />
+            
             <div
-              className=" leading-8"
+              className="prose prose-slate max-w-none text-slate-600 leading-relaxed mb-8"
               dangerouslySetInnerHTML={{
                 __html: productWithVariants.product.description,
               }}
             />
-            <p className="text-2xl font-bold my-2">
-              {formatCurrency(productWithVariants.product.price)} USD
-            </p>
-            <div className="flex gap-2 items-center">
-              <p className="font-medium">Colors :</p>
-              {productWithVariants.product.productVariants.map((v) => (
-                <VariantPicker
-                  key={v.id}
-                  {...v}
-                  title={productWithVariants.product.title}
-                  price={productWithVariants.product.price}
-                  image={v.variantImages[0].image_url}
-                  productId={v.productID}
-                />
-              ))}
+            
+            <div className="space-y-6 mt-auto">
+              <div className="flex flex-col gap-3">
+                <p className="text-sm font-semibold text-slate-900 uppercase tracking-widest">
+                  Color
+                </p>
+                <div className="flex gap-4 items-center">
+                  {productWithVariants.product.productVariants.map((v) => (
+                    <VariantPicker
+                      key={v.id}
+                      {...v}
+                      title={productWithVariants.product.title}
+                      price={productWithVariants.product.price}
+                      image={v.variantImages[0].image_url}
+                      productId={v.productID}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="pt-4 border-t border-slate-100">
+                <AddToCart />
+              </div>
             </div>
-            <AddToCart />
           </div>
         </main>
       )}

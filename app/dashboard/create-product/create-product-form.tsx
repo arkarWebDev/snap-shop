@@ -95,16 +95,16 @@ const CreateProductForm = () => {
   }, []);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{isEditMode ? "Edit" : "Create"} Product</CardTitle>
-        <CardDescription>
+    <Card className="border border-slate-100 shadow-sm rounded-3xl overflow-hidden bg-white max-w-4xl">
+      <CardHeader className="bg-slate-50/50 border-b border-slate-100 px-8 py-6">
+        <CardTitle className="text-2xl text-slate-800">{isEditMode ? "Edit" : "Create"} Product</CardTitle>
+        <CardDescription className="text-slate-500 text-sm mt-1">
           {isEditMode
-            ? `Edit your product : ${editProduct}`
-            : "Create a new product"}
+            ? `Edit your product requirements for: ${editProduct}`
+            : "Deploy a new premium product to your inventory."}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -140,15 +140,14 @@ const CreateProductForm = () => {
                 <FormItem>
                   <FormLabel>Product price</FormLabel>
                   <FormControl>
-                    <div className="flex items-center gap-2">
-                      <DollarSign
-                        size={36}
-                        className="p-2 bg-muted rounded-md"
-                      />
+                    <div className="flex items-center gap-2 group">
+                      <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 group-focus-within:text-slate-900 group-focus-within:border-slate-300 transition-colors">
+                        <DollarSign size={20} strokeWidth={2.5} />
+                      </div>
                       <Input
-                        placeholder="Price must shown in MMK"
+                        placeholder="Price formatted in MMK/USD"
+                        className="py-6 text-lg border-slate-200 rounded-xl shadow-sm focus-visible:ring-slate-300 transition-all font-medium"
                         {...field}
-                        // step={10}
                         min={0}
                         type="number"
                       />
@@ -160,10 +159,10 @@ const CreateProductForm = () => {
             />
             <Button
               type="submit"
-              className="w-full"
+              className="w-full rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-6 shadow-md transition-all active:scale-[0.98] mt-4"
               disabled={status === "executing"}
             >
-              {isEditMode ? "Update product" : "Create product"}
+              {isEditMode ? "Update Product Attributes" : "List New Product"}
             </Button>
           </form>
         </Form>

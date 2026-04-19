@@ -4,6 +4,7 @@ import { useCartStore } from "@/store/cart-store";
 import Image from "next/image";
 import React from "react";
 import EmptyCartImg from "@/public/empty-cart.png";
+import { useRouter } from "next/navigation";
 
 import {
   Table,
@@ -19,7 +20,12 @@ import formatCurrency from "@/lib/formatCurrency";
 import { Button } from "../ui/button";
 import { totalPriceCalc } from "@/lib/total-price";
 
-const CartItem = () => {
+type CartItemProps = {
+  isLoggedIn?: boolean;
+};
+
+const CartItem = ({ isLoggedIn }: CartItemProps) => {
+  const router = useRouter();
   const cart = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -35,34 +41,35 @@ const CartItem = () => {
         </div>
       ) : (
         <div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>Image</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead className="text-right">Price</TableHead>
+          <Table className="my-6">
+            <TableHeader className="bg-slate-50 border-b border-slate-100">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="font-semibold text-slate-600 rounded-tl-xl">Product</TableHead>
+                <TableHead className="font-semibold text-slate-600">Image</TableHead>
+                <TableHead className="font-semibold text-slate-600">Quantity</TableHead>
+                <TableHead className="text-right font-semibold text-slate-600 rounded-tr-xl">Price</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {cart.map((citem) => (
-                <TableRow key={citem.id}>
-                  <TableCell className="font-medium">{citem.name}</TableCell>
+                <TableRow key={citem.id} className="border-b border-slate-100/60 hover:bg-slate-50/50 transition-colors">
+                  <TableCell className="font-bold text-slate-800">{citem.name}</TableCell>
                   <TableCell>
-                    <div>
+                    <div className="w-14 h-14 relative bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                       <Image
-                        className="rounded-md"
+                        className="object-cover"
+                        fill
                         src={citem.image}
                         alt={citem.name}
-                        width={50}
-                        height={50}
                       />
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex bg-slate-100 border border-slate-200 rounded-full w-fit p-1 shadow-inner items-center">
                       <Button
-                        size={"sm"}
+                        size={"icon"}
+                        variant={"ghost"}
+                        className="h-7 w-7 rounded-full bg-white shadow-sm border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all font-semibold"
                         onClick={() => {
                           removeFromCart({
                             ...citem,
@@ -75,11 +82,13 @@ const CartItem = () => {
                       >
                         -
                       </Button>
-                      <p className="text-sm font-medium">
+                      <p className="text-sm font-bold text-slate-900 w-8 text-center tabular-nums">
                         {citem.variant.quantity}
                       </p>
                       <Button
-                        size={"sm"}
+                        size={"icon"}
+                        variant={"ghost"}
+                        className="h-7 w-7 rounded-full bg-white shadow-sm border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all font-semibold"
                         onClick={() => {
                           addToCart({
                             ...citem,
@@ -94,16 +103,16 @@ const CartItem = () => {
                       </Button>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right font-semibold text-slate-700">
                     {formatCurrency(Number(citem.price))}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={3}>Total</TableCell>
-                <TableCell className="text-right">
+            <TableFooter className="bg-transparent border-t-2 border-slate-200">
+              <TableRow className="hover:bg-transparent">
+                <TableCell colSpan={3} className="font-bold text-slate-800 text-base py-6">Total Due</TableCell>
+                <TableCell className="text-right font-extrabold text-xl text-slate-900">
                   {formatCurrency(totalPriceCalc(cart))}
                 </TableCell>
               </TableRow>
@@ -111,12 +120,16 @@ const CartItem = () => {
           </Table>
           <Button
             size={"lg"}
-            className="w-full mt-2 mb-6"
+            className="w-full mt-2 mb-6 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-7 text-lg shadow-xl shadow-slate-900/20 active:scale-[0.98] transition-all"
             onClick={() => {
+              if (!isLoggedIn) {
+                router.push("/auth/login");
+                return;
+              }
               setCartPosition("Checkout");
             }}
           >
-            Place Order
+            {isLoggedIn ? "Continue to Payment" : "Login to Checkout"}
           </Button>
         </div>
       )}

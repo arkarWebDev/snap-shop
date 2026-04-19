@@ -14,10 +14,13 @@ const Settings = async () => {
   if (!session?.user) return redirect("/");
 
   return (
-    <>
-      <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
-      <SettingsCard title="Settings" description="Manage your account settings">
-        <main className=" flex flex-col gap-4">
+    <div className="max-w-4xl">
+      <div className="mb-8">
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Account Settings</h1>
+        <p className="text-slate-500 mt-2">Manage your personal preferences and system security.</p>
+      </div>
+      <SettingsCard title="General Preferences" description="Review or update your account details below.">
+        <main className="flex flex-col gap-6">
           <ProfileCard session={session} />
 
           {!session.user.isOauth && (
@@ -32,7 +35,7 @@ const Settings = async () => {
           <LogOutBtn />
         </main>
       </SettingsCard>
-    </>
+    </div>
   );
 };
 

@@ -74,7 +74,7 @@ const PaymentForm = ({ totalPrice }: PaymentFormProps) => {
         clientSecret: repsonse.data.success.clientSecretId!,
         redirect: "if_required",
         confirmParams: {
-          return_url: "https://icore-five.vercel.app/success",
+          return_url: "https://istore-mm.vercel.app/success",
           receipt_email: repsonse.data.success.user_email,
         },
       });
